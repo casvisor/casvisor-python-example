@@ -1,3 +1,4 @@
+import json
 from datetime import datetime, timezone, timedelta
 import time
 import random
@@ -32,15 +33,15 @@ def get_rfc3339_timestamp():
     return rfc3339_time
 
 
-if __name__=="__main__":
+def add_blockchain_record(user, topic, data):
     name = get_random_name("blockchain_record")
 
     createdTime = get_rfc3339_timestamp()
 
-    user = "Alice Green"
-    client = "Federated Learning"
+    # Serialize the Python object to a JSON string
+    data_json_str = json.dumps(data)
 
-    # Create a new record
+    # Create a new record with serialized JSON string as the 'object'
     record = Record(
         owner=TestOrganization,
         name=name,
@@ -50,8 +51,8 @@ if __name__=="__main__":
         user=user,
         method="POST",
         requestUri="/api/add-blockchain-record",
-        action=client,
-        object="test_object",
+        action=topic,
+        object=data_json_str,
         language="en",
         response='{"status":"ok","msg":""}',
         isTriggered=False,
@@ -66,3 +67,17 @@ if __name__=="__main__":
         print(f"add_record() OK: {result}")
     except Exception as e:
         print(f"Failed to add record: {e}")
+
+
+if __name__ == "__main__":
+    data = {
+        "timestamp": "2025-02-21T20:39:05+08:00",
+        "job": "联邦学习",
+        "dataset": "imagenet",
+        "iteration": 123,
+        "loss": 0.333,
+        "precision": 0.333,
+        "recall": 0.333,
+        "F1": 0.333,
+    }
+    add_blockchain_record("LY Xie", "图像超分", data)
