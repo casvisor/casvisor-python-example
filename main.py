@@ -4,7 +4,7 @@ import time
 import random
 from casvisor import BaseClient, Record, _RecordSDK
 
-TestEndpoint = "https://demo.casvisor.com"
+TestEndpoint = "https://med.casvisor.com"
 TestClientId = "111111"
 TestClientSecret = "124140638b4f9de7e78e79ba22d451c17bfa9688"
 TestOrganization = "casbin"
